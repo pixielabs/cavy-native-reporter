@@ -1,0 +1,22 @@
+{
+  "name": "cavy-native-reporter",
+  "version": "0.1.0",
+  "description": "A native test reporter for Cavy, a React Native integration test framework.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "react",
+    "react-native",
+    "ios",
+    "android",
+    "integration",
+    "tests",
+    "testing",
+    "test",
+    "specs"
+  ],
+  "author": "Pixie Labs",
+  "license": "MIT"
+}
