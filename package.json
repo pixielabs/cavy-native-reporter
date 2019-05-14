@@ -18,5 +18,9 @@
     "specs"
   ],
   "author": "Pixie Labs",
-  "license": "MIT"
+  "license": "MIT",
+  "peerDependencies": {
+    "react-native": "~0.59.0",
+    "cavy": "^0.6.1"
+  },
 }

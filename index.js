@@ -1,3 +1,5 @@
-exports.printMsg = () => {
-  console.log('This is a message from cavy-native-reporter');
-}
+import { NativeModules } from 'react-native';
+
+const { CavyNativeReporter } = NativeModules;
+
+export default CavyNativeReporter;

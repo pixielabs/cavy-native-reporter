@@ -10,6 +10,10 @@ or `npm`:
 
     npm i --save-dev cavy cavy-native-reporter
 
+Then link the package:
+
+    react-native link cavy-native-reporter
+
 ## Usage
 
 Check out [the sample app]() for a full example of how you may want to integration cavy-native-reporter into your native testing setup.
