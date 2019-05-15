@@ -1276,9 +1276,9 @@ caseless@~0.12.0:
   version "0.12.0"
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
 
-cavy@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/cavy/-/cavy-2.0.0.tgz#bd3f48a7db5bec7ea48a6ab85905c9389d58f1ff"
+cavy@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/cavy/-/cavy-2.1.0.tgz#ecc028574977b953a26a13551f7552d83cdfdf2a"
   dependencies:
     create-react-class "^15.6.0"
     prop-types "^15.5.10"
