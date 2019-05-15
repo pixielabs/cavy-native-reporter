@@ -6,8 +6,11 @@
  * @flow
  */
 
-import React, {Component} from 'react';
-import {Platform, StyleSheet, Text, View} from 'react-native';
+import React, { Component } from 'react';
+import { Platform, StyleSheet, Text, View } from 'react-native';
+
+import { hook, wrap } from 'cavy';
+import CavyNativeReporter from 'cavy-native-reporter';
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -17,10 +20,11 @@ const instructions = Platform.select({
 });
 
 type Props = {};
-export default class App extends Component<Props> {
+class App extends Component<Props> {
   render() {
+    console.log(CavyNativeReporter);
     return (
-      <View style={styles.container}>
+      <View ref={this.props.generateTestHook('HomeScreen')} style={styles.container}>
         <Text style={styles.welcome}>Welcome to React Native!</Text>
         <Text style={styles.instructions}>To get started, edit App.js</Text>
         <Text style={styles.instructions}>{instructions}</Text>
@@ -28,6 +32,8 @@ export default class App extends Component<Props> {
     );
   }
 }
+
+export default hook(App);
 
 const styles = StyleSheet.create({
   container: {

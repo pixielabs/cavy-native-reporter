@@ -5,7 +5,14 @@
  * @format
  */
 
+const path = require('path');
+
+const watchFolders = [
+ path.resolve(__dirname, "../")
+];
+
 module.exports = {
+  watchFolders,
   transformer: {
     getTransformOptions: async () => ({
       transform: {

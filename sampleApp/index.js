@@ -2,8 +2,23 @@
  * @format
  */
 
-import {AppRegistry} from 'react-native';
+import React, { Component } from 'react';
+import { AppRegistry } from 'react-native';
 import App from './App';
-import {name as appName} from './app.json';
+import AppSpec from './specs/AppSpec';
+import { name as appName } from './app.json';
 
-AppRegistry.registerComponent(appName, () => App);
+import { Tester, TestHookStore } from 'cavy';
+const testHookStore = new TestHookStore();
+
+class TestableApp extends Component {
+  render() {
+    return (
+      <Tester specs={[AppSpec]} store={testHookStore}>
+        <App/>
+      </Tester>
+    )
+  }
+}
+
+AppRegistry.registerComponent(appName, () => TestableApp);

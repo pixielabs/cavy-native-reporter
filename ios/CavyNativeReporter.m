@@ -1,12 +1,7 @@
+#import <React/RCTBridgeModule.h>
 
-#import "CavyNativeReporter.h"
+@interface RCT_EXTERN_REMAP_MODULE(CavyNativeReporter, CavyNativeReporter, NSObject)
 
-@implementation CavyNativeReporter
-
-- (dispatch_queue_t)methodQueue
-{
-    return dispatch_get_main_queue();
-}
-RCT_EXPORT_MODULE()
+RCT_EXTERN_METHOD(testsFinished:(NSDictionary*)report)
 
 @end
