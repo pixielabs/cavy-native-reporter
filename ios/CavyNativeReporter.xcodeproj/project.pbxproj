@@ -7,27 +7,28 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		B3E7B58A1CC2AC0600A0062D /* CavyNativeReporter.m in Sources */ = {isa = PBXBuildFile; fileRef = B3E7B5891CC2AC0600A0062D /* CavyNativeReporter.m */; };
-		D1B60DED228AFA7500AF08FF /* CavyNativeReporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1B60DEC228AFA7500AF08FF /* CavyNativeReporter.swift */; };
+		D11623E6228C57C80002B656 /* CavyNativeReporter.h in Copy Headers */ = {isa = PBXBuildFile; fileRef = D185C549228C29CB00F015AC /* CavyNativeReporter.h */; };
+		D185C54B228C29CB00F015AC /* CavyNativeReporter.m in Sources */ = {isa = PBXBuildFile; fileRef = D185C54A228C29CB00F015AC /* CavyNativeReporter.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		58B511D91A9E6C8500147676 /* CopyFiles */ = {
+		58B511D91A9E6C8500147676 /* Copy Headers */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "include/$(PRODUCT_NAME)";
 			dstSubfolderSpec = 16;
 			files = (
+				D11623E6228C57C80002B656 /* CavyNativeReporter.h in Copy Headers */,
 			);
+			name = "Copy Headers";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		134814201AA4EA6300B7C361 /* libCavyNativeReporter.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCavyNativeReporter.a; sourceTree = BUILT_PRODUCTS_DIR; };
-		B3E7B5881CC2AC0600A0062D /* CavyNativeReporter-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CavyNativeReporter-Bridging-Header.h"; sourceTree = "<group>"; };
-		B3E7B5891CC2AC0600A0062D /* CavyNativeReporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CavyNativeReporter.m; sourceTree = "<group>"; };
-		D1B60DEC228AFA7500AF08FF /* CavyNativeReporter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CavyNativeReporter.swift; sourceTree = "<group>"; };
+		D185C549228C29CB00F015AC /* CavyNativeReporter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = CavyNativeReporter.h; sourceTree = "<group>"; };
+		D185C54A228C29CB00F015AC /* CavyNativeReporter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CavyNativeReporter.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,9 +53,8 @@
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
-				D1B60DEC228AFA7500AF08FF /* CavyNativeReporter.swift */,
-				B3E7B5881CC2AC0600A0062D /* CavyNativeReporter-Bridging-Header.h */,
-				B3E7B5891CC2AC0600A0062D /* CavyNativeReporter.m */,
+				D185C549228C29CB00F015AC /* CavyNativeReporter.h */,
+				D185C54A228C29CB00F015AC /* CavyNativeReporter.m */,
 				134814211AA4EA7D00B7C361 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -68,7 +68,7 @@
 			buildPhases = (
 				58B511D71A9E6C8500147676 /* Sources */,
 				58B511D81A9E6C8500147676 /* Frameworks */,
-				58B511D91A9E6C8500147676 /* CopyFiles */,
+				58B511D91A9E6C8500147676 /* Copy Headers */,
 			);
 			buildRules = (
 			);
@@ -117,8 +117,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D1B60DED228AFA7500AF08FF /* CavyNativeReporter.swift in Sources */,
-				B3E7B58A1CC2AC0600A0062D /* CavyNativeReporter.m in Sources */,
+				D185C54B228C29CB00F015AC /* CavyNativeReporter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -221,9 +220,6 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CavyNativeReporter;
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "CavyNativeReporter-Bridging-Header.h";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
 		};
@@ -242,8 +238,6 @@
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = CavyNativeReporter;
 				SKIP_INSTALL = YES;
-				SWIFT_OBJC_BRIDGING_HEADER = "CavyNativeReporter-Bridging-Header.h";
-				SWIFT_VERSION = 5.0;
 			};
 			name = Release;
 		};

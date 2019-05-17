@@ -12,8 +12,10 @@ import { Tester, TestHookStore } from 'cavy';
 import CavyNativeReporter from 'cavy-native-reporter';
 const testHookStore = new TestHookStore();
 
+
 const reporter = (report) => {
-  CavyNativeReporter.testsFinished(report);
+  console.log('About to call CavyNativeReporter in JS!');
+  CavyNativeReporter.testsFinished();
 }
 
 class TestableApp extends Component {
