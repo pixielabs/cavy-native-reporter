@@ -40,7 +40,6 @@
 		6C7C94AEE229F3D448890174 /* Pods_sampleAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ABA1C8C5F8903D5103416610 /* Pods_sampleAppTests.framework */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
-		D11623E3228C52CB0002B656 /* libCavyNativeReporter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1B60E8F228B0C3700AF08FF /* libCavyNativeReporter.a */; };
 		D185C54E228C48FC00F015AC /* BridgeTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D185C54D228C48FC00F015AC /* BridgeTests.swift */; };
 		D18603F4228B0F3900DD9BE2 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = D18603F3228B0F3900DD9BE2 /* File.swift */; };
 		D1B60E90228B0C4D00AF08FF /* libCavyNativeReporter.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1B60E8F228B0C3700AF08FF /* libCavyNativeReporter.a */; };
@@ -388,7 +387,6 @@
 			files = (
 				140ED2AC1D01E1AD002B40FF /* libReact.a in Frameworks */,
 				6C7C94AEE229F3D448890174 /* Pods_sampleAppTests.framework in Frameworks */,
-				D11623E3228C52CB0002B656 /* libCavyNativeReporter.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

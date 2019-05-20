@@ -12,7 +12,6 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CavyNativeReporter : NSObject <RCTBridgeModule>
-@property (class, nonatomic, copy) void(^callback)();
 + (void) onFinishWithBlock:(void(^)())block;
 @end
 

@@ -14,7 +14,6 @@ class BridgeTests: XCTestCase {
   func testBridge() {
     waitUntil(timeout: 100) { done in
       CavyNativeReporter.onFinish {
-        NSLog("In block")
         done()
       }
     }
