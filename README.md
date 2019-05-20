@@ -62,10 +62,67 @@ class TestableApp extends Component {
 AppRegistry.registerComponent('App', () => TestableApp);
 ```
 
-By default, Cavy sends a test report to [cavy-cli][cli]. Using cavy-native-reporter overrides this functionality.
+By default, Cavy sends a test report to [cavy-cli][cli]. Using
+cavy-native-reporter overrides this functionality.
 
-#### 3. [More steps]
-Some instructions on how to allow your native tests to report Cavy tests...
+## Using the reporter in native tests
+
+#### iOS XCTest
+`CavyNativeReporter` has a function `onFinish` that you can call from within
+your swift code (or Objective-C).
+
+For example, in the sample app, we have a class `BridgeTests` which subclasses
+`XCTestCase`, waits for Cavy tests to run, and fails if any return an error.
+
+```swift
+@testable import sampleApp
+import XCTest
+import Nimble
+
+class BridgeTests: XCTestCase {
+  func testBridge() {
+    waitUntil(timeout: 100) { done in
+      CavyNativeReporter.onFinish { cavyReport in
+        let errorCount = cavyReport["errorCount"] as! Int;
+        if (errorCount > 0) {
+          fail("Tests failed")
+        } else {
+          NSLog("Tests completed")
+        }
+        done()
+      }
+    }
+  }
+}
+```
+
+Here, we're using [Nimble's](https://github.com/Quick/Nimble) utility function
+`waitUntil`, which waits asynchronously until the `done` closure is called or
+the timeout has been reached.
+
+The `cavyReport` argument passed into the block will look something like this,
+so it's possible to iterate over the results and log more detailed messages:
+
+```swift
+{
+  duration = "0.2";
+  errorCount = 0;
+  results = (
+    {
+      message = "Test suite description: test number 1";
+      passed = 1;
+    },
+    {
+      message = "Test suite description: test number 2";
+      passed = 0;
+    }
+  );
+}
+```
+
+#### Android
+
+TBD!
 
 ## Contributing
 Before contributing, please read the [code of conduct](CODE_OF_CONDUCT.md).

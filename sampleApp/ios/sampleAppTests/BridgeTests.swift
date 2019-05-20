@@ -13,7 +13,7 @@ import Nimble
 // The `cavyReport` argument looks like this:
 //
 //{
-//  duration = "0.13";
+//  duration = "0.2";
 //  errorCount = 0;
 //  results = (
 //    {
@@ -35,7 +35,7 @@ class BridgeTests: XCTestCase {
         if (errorCount > 0) {
           fail("Tests failed")
         } else {
-          NSLog("%@", cavyReport)
+          NSLog("Tests completed")
         }
         done()
       }
