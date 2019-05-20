@@ -1,5 +1,6 @@
 # Cavy Native Reporter
-A reporter for [Cavy], a React Native testing framework, that reports test results to either the Android or iOS test runners.
+A reporter for [Cavy], a React Native testing framework, that reports test
+results to either the Android or iOS test runners.
 
 ## Installation
 To get started using Cavy with native reporting, install using `yarn`:
@@ -16,26 +17,35 @@ Then link the package:
 
 ## Usage
 
-Check out [the sample app]() for a full example of how you may want to integration cavy-native-reporter into your native testing setup.
+Check out [the sample app](https://github.com/pixielabs/cavy-native-reporter/tree/master/sampleApp)
+for a full example of how you may want to integrate cavy-native-reporter into
+your native testing setup.
 
 #### 1. Set up Cavy
 
-Follow the instructions in the [Cavy] README to set up a testing entry point for your app and write your tests.
+Follow the instructions in the [Cavy] README to set up a testing entry point
+for your app and write your tests.
 
 #### 2. Import and use cavy-native-reporter
 
-Import the `reporter` function from cavy-native-reporter and pass it in to Cavy's `Tester` HOC as the `reporter` prop.
+Import the `CavyNativeReporter` from cavy-native-reporter. The module
+`CavyNativeReporter` has a function `testsFinished`, that takes the test report
+and calls a callback function that you can define in your native tester code.
+See an example of how you might do this in Step 3 below.
 
 ```js
 import React, { Component } from 'react';
 import { AppRegistry } from 'react-native';
-import { Tester, TestHookStore } from 'cavy';
-import reporter from 'cavy-native-reporter';
 import App from './app';
 
+import { Tester, TestHookStore } from 'cavy';
+import CavyNativeReporter from 'cavy-native-reporter';
 import IntegrationSpecs from './specs/IntegrationSpecs';
 
 const testHookStore = new TestHookStore();
+const reporter = (report) => {
+  CavyNativeReporter.testsFinished(report);
+}
 
 class TestableApp extends Component {
   render() {

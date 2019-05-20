@@ -5,17 +5,15 @@
 import React, { Component } from 'react';
 import { AppRegistry } from 'react-native';
 import App from './App';
-import AppSpec from './specs/AppSpec';
 import { name as appName } from './app.json';
 
 import { Tester, TestHookStore } from 'cavy';
 import CavyNativeReporter from 'cavy-native-reporter';
+import AppSpec from './specs/AppSpec';
+
 const testHookStore = new TestHookStore();
-
-
 const reporter = (report) => {
-  console.log('About to call CavyNativeReporter in JS!');
-  CavyNativeReporter.testsFinished();
+  CavyNativeReporter.testsFinished(report);
 }
 
 class TestableApp extends Component {

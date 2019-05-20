@@ -12,7 +12,7 @@
 NS_ASSUME_NONNULL_BEGIN
 
 @interface CavyNativeReporter : NSObject <RCTBridgeModule>
-+ (void) onFinishWithBlock:(void(^)())block;
++ (void) onFinishWithBlock:(void(^)(NSDictionary *))block;
 @end
 
 NS_ASSUME_NONNULL_END

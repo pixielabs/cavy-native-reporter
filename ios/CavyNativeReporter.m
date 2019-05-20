@@ -11,24 +11,24 @@
 
 @implementation CavyNativeReporter
 
-static void (^callback)() = nil;
-static bool cavyFinished = false;
+static void (^callback)(NSDictionary *) = nil;
+static NSDictionary *cavyReport = nil;
 
 RCT_EXPORT_MODULE(CavyNativeReporter);
 
-// Called from JS
-RCT_EXPORT_METHOD(testsFinished) {
-    cavyFinished = true;
+RCT_EXPORT_METHOD(testsFinished:(NSDictionary *)report)
+{    
     if (callback) {
-        callback();
+        callback(report);
+    } else {
+        cavyReport = report;
     }
 }
 
-// Called from within test bridge
-+ (void) onFinishWithBlock:(void (^)())block
++ (void) onFinishWithBlock:(void (^)(NSDictionary *))block
 {
-    if (cavyFinished) {
-        block();
+    if (cavyReport) {
+        block(cavyReport);
     } else {
         callback = block;
     }
