@@ -37,22 +37,21 @@ See an example of how you might do this in Step 3 below.
 import React, { Component } from 'react';
 import { AppRegistry } from 'react-native';
 import App from './app';
-
 import { Tester, TestHookStore } from 'cavy';
-import CavyNativeReporter from 'cavy-native-reporter';
 import IntegrationSpecs from './specs/IntegrationSpecs';
 
+// Extra import for cavy-native-reporter:
+import CavyNativeReporter from 'cavy-native-reporter';
+
 const testHookStore = new TestHookStore();
-const reporter = (report) => {
-  CavyNativeReporter.testsFinished(report);
-}
 
 class TestableApp extends Component {
   render() {
     return (
       <Tester specs={IntegrationSpecs}
         store={testHookStore}
-        reporter={reporter}  
+        // Extra prop for cavy-native reporter:
+        reporter={CavyNativeReporter.testsFinished}  
         <App/>
       </Tester>
     );
