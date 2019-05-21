@@ -1,4 +1,4 @@
-# Cavy Native Reporter
+# Cavy Native Reporter (Work in progress)
 A reporter for [Cavy], a React Native testing framework, that reports test
 results to either the Android or iOS test runners.
 
