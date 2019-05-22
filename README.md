@@ -131,7 +131,6 @@ waits for Cavy tests to run and fails if any test returns an error:
     [expectation fulfill];
   }];
 
-
   [self waitForExpectations:@[expectation] timeout:100];
 }
 
@@ -153,23 +152,22 @@ The following Swift code is equivalent to the Objective-C example above (note
 that the method `onFinishWithBlock` is renamed when you reference it in Swift):
 
 ```swift
-@testable import sampleApp
 import XCTest
-import Nimble
 
-class BridgeTest: XCTestCase {
+class BridgeTests: XCTestCase {
   func testBridge() {
-    waitUntil(timeout: 100) { done in
-      CavyNativeReporter.onFinish { report in
-        let errorCount = report["errorCount"] as! Int;
-        if (errorCount > 0) {
-          fail("Tests failed")
-        } else {
-          NSLog("Tests completed")
-        }
-        done()
+    let expectation = XCTestExpectation(description: "Cavy tests passed");
+
+    CavyNativeReporter.onFinish { report in
+      NSLog("%@", report);
+      let errorCount = report["errorCount"] as! Int;
+      if (errorCount > 0) {
+        XCTFail("Cavy tests had one or more errors");
       }
+      expectation.fulfill();
     }
+
+    wait(for: [expectation], timeout: 5);
   }
 }
 ```

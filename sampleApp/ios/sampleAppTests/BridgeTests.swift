@@ -6,9 +6,8 @@
 //  Copyright © 2019 Facebook. All rights reserved.
 //
 
-@testable import sampleApp
+
 import XCTest
-import Nimble
 
 // The `cavyReport` argument looks like this:
 //
@@ -29,17 +28,17 @@ import Nimble
 //
 class BridgeTests: XCTestCase {
   func testBridge() {
-    waitUntil(timeout: 100) { done in
-      CavyNativeReporter.onFinish { cavyReport in
-        let errorCount = cavyReport["errorCount"] as! Int;
-        if (errorCount > 0) {
-          fail("Tests failed")
-        } else {
-          NSLog("Tests completed")
-        }
-        done()
+    let expectation = XCTestExpectation(description: "Cavy tests passed");
+    
+    CavyNativeReporter.onFinish { report in
+      NSLog("%@", report);
+      let errorCount = report["errorCount"] as! Int;
+      if (errorCount > 0) {
+        XCTFail("Cavy tests had one or more errors");
       }
+      expectation.fulfill();
     }
+    
+    wait(for: [expectation], timeout: 5);
   }
 }
-
