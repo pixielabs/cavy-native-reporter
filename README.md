@@ -120,7 +120,6 @@ waits for Cavy tests to run and fails if any test returns an error:
 @implementation BridgeTest
 
 - (void)testBridge {
-  // Make a new expectation
   XCTestExpectation *expectation = [[XCTestExpectation alloc] initWithDescription: @"Cavy tests passed"];
 
   [CavyNativeReporter onFinishWithBlock: ^void(NSDictionary* report) {
@@ -154,7 +153,7 @@ that the method `onFinishWithBlock` is renamed when you reference it in Swift):
 ```swift
 import XCTest
 
-class BridgeTests: XCTestCase {
+class BridgeTest: XCTestCase {
   func testBridge() {
     let expectation = XCTestExpectation(description: "Cavy tests passed");
 
