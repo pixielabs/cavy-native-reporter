@@ -45,30 +45,29 @@ for your app and write your tests.
 #### 2. Import and use cavy-native-reporter
 
 Import the `CavyNativeReporter` from cavy-native-reporter. The module
-`CavyNativeReporter` has a function `testsFinished`, that takes the test report
+`CavyNativeReporter` has a method `reporter`, that takes the test report
 and calls a callback function that you can define in your native tester code.
-See an example of how you might do this in Step 3 below.
+See examples of how you might do this in [Reporting to Native Tests](#reporting-to-native-tests) below.
 
 ```js
 import React, { Component } from 'react';
 import { AppRegistry } from 'react-native';
 import App from './app';
-
 import { Tester, TestHookStore } from 'cavy';
-import CavyNativeReporter from 'cavy-native-reporter';
 import IntegrationSpecs from './specs/IntegrationSpecs';
 
+// Extra import for cavy-native-reporter:
+import CavyNativeReporter from 'cavy-native-reporter';
+
 const testHookStore = new TestHookStore();
-const reporter = (report) => {
-  CavyNativeReporter.testsFinished(report);
-}
 
 class TestableApp extends Component {
   render() {
     return (
       <Tester specs={IntegrationSpecs}
         store={testHookStore}
-        reporter={reporter}  
+        // Extra prop for cavy-native reporter:
+        reporter={CavyNativeReporter.reporter}  
         <App/>
       </Tester>
     );
@@ -81,45 +80,20 @@ AppRegistry.registerComponent('App', () => TestableApp);
 By default, Cavy sends a test report to [cavy-cli][cli]. Using
 cavy-native-reporter overrides this functionality.
 
-## Using the reporter in native tests
+## Reporting to Native Tests
 
-#### iOS XCTest
-`CavyNativeReporter` has a function `onFinish` that you can call from within
-your swift code (or Objective-C).
+### iOS XCTest (Objective C)
+`CavyNativeReporter` has a method `onFinishWithBlock` that you can call from
+your native tests.
 
-For example, in the sample app, we have a class `BridgeTests` which subclasses
-`XCTestCase`, waits for Cavy tests to run, and fails if any return an error.
+`onFinishWithBlock` takes a block with a single argument, which is the report
+object from Cavy. The block is called as soon as the test report is available
+from Cavy and the report has the following structure:
 
-```swift
-@testable import sampleApp
-import XCTest
-import Nimble
+The `report` argument passed to the block is an `NSDictionary` with the
+following structure:
 
-class BridgeTests: XCTestCase {
-  func testBridge() {
-    waitUntil(timeout: 100) { done in
-      CavyNativeReporter.onFinish { cavyReport in
-        let errorCount = cavyReport["errorCount"] as! Int;
-        if (errorCount > 0) {
-          fail("Tests failed")
-        } else {
-          NSLog("Tests completed")
-        }
-        done()
-      }
-    }
-  }
-}
-```
-
-Here, we're using [Nimble's](https://github.com/Quick/Nimble) utility function
-`waitUntil`, which waits asynchronously until the `done` closure is called or
-the timeout has been reached.
-
-The `cavyReport` argument passed into the block will look something like this,
-so it's possible to iterate over the results and log more detailed messages:
-
-```swift
+```objc
 {
   duration = "0.2";
   errorCount = 0;
@@ -133,6 +107,83 @@ so it's possible to iterate over the results and log more detailed messages:
       passed = 0;
     }
   );
+}
+```
+
+So if you need to, it's possible to iterate over the results and log more
+detailed messages.
+
+
+To set up your own XCTestCase using `cavy-native-reporter`:
+1. Open your project's `.xcodeproj` (or `.xcworkspace`) in Xcode.
+2. In the Project navigator view, navigate to the folder containing your XCTest
+test cases.
+3. Create a new test case (select New File -> Unit Test Case Class).
+4. Import `<CavyNativeReporter/CavyNativeReporter.h>`
+5. Write your expectation!
+
+Taking the sample app as an example, we have an XCTestCase `BridgeTest` which
+waits for Cavy tests to run and fails if any test returns an error:
+
+```objc
+#import <XCTest/XCTest.h>
+#import <CavyNativeReporter/CavyNativeReporter.h>
+
+@interface BridgeTest : XCTestCase
+
+@end
+
+@implementation BridgeTest
+
+- (void)testBridge {
+  XCTestExpectation *expectation = [[XCTestExpectation alloc] initWithDescription: @"Cavy tests passed"];
+
+  [CavyNativeReporter onFinishWithBlock: ^void(NSDictionary* report) {
+    long errorCount = [report[@"errorCount"] integerValue];
+    if (errorCount > 0) {
+      XCTFail(@"Cavy tests had one or more errors");
+    }
+    [expectation fulfill];
+  }];
+
+  [self waitForExpectations:@[expectation] timeout:100];
+}
+
+@end
+```
+
+### iOS XCTest (Swift)
+You could achieve the same thing in Swift with the following steps:
+
+1. Follow the steps above for creating a new test case, but choose Swift when
+prompted to choose a language.
+2. Make sure that a Bridging Header file has also been created (Xcode will
+usually prompt you to create one if this is your first Swift file in the
+project).
+3. Import `<CavyNativeReporter/CavyNativeReporter.h>` in your Bridging Header.
+4. Write your expectation!
+
+The following Swift code is equivalent to the Objective-C example above (note
+that the method `onFinishWithBlock` is renamed when you reference it in Swift):
+
+```swift
+import XCTest
+
+class BridgeTest: XCTestCase {
+  func testBridge() {
+    let expectation = XCTestExpectation(description: "Cavy tests passed");
+
+    CavyNativeReporter.onFinish { report in
+      NSLog("%@", report);
+      let errorCount = report["errorCount"] as! Int;
+      if (errorCount > 0) {
+        XCTFail("Cavy tests had one or more errors");
+      }
+      expectation.fulfill();
+    }
+
+    wait(for: [expectation], timeout: 5);
+  }
 }
 ```
 

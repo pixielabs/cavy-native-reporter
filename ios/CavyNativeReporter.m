@@ -16,7 +16,7 @@ static NSDictionary *cavyReport = nil;
 
 RCT_EXPORT_MODULE(CavyNativeReporter);
 
-RCT_EXPORT_METHOD(testsFinished:(NSDictionary *)report)
+RCT_EXPORT_METHOD(reporter:(NSDictionary *)report)
 {    
     if (callback) {
         callback(report);
