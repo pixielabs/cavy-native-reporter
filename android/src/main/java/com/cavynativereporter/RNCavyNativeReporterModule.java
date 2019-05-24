@@ -21,8 +21,15 @@ public class RNCavyNativeReporterModule extends ReactContextBaseJavaModule {
     return "CavyNativeReporter";
   }
 
+  public static Runnable callback = null;
+  public static ReadableMap cavyReport = null;
+
   @ReactMethod
   public void reporter(ReadableMap report) {
-    Log.d("CavyNativeReporter", "Is this thing on?");
+    cavyReport = report;
+  }
+
+  public static void onFinish(Runnable callback) {
+    callback.run();
   }
 }
