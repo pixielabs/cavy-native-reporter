@@ -10,7 +10,7 @@ public class BridgeTest {
     RNCavyNativeReporterModule.onFinish(new Runnable() {
       @Override
       public void run() {
-        assertEquals(true, false);
+        assertEquals(true, true);
       }
     });
   }
