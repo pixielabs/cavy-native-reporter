@@ -83,12 +83,10 @@ cavy-native-reporter overrides this functionality.
 ## Reporting to Native Tests
 
 ### iOS XCTest (Objective C)
-`CavyNativeReporter` has a method `onFinishWithBlock` that you can call from
-your native tests.
-
-`onFinishWithBlock` takes a block with a single argument, which is the report
-object from Cavy. The block is called as soon as the test report is available
-from Cavy and the report has the following structure:
+##### `onFinishWithBlock`
+Call `onFinishWithBlock` from within your native code and pass in a block
+taking the single argument, `report`. Your block will be called as soon as the
+test report is available from Cavy.
 
 The `report` argument passed to the block is an `NSDictionary` with the
 following structure:
@@ -110,10 +108,10 @@ following structure:
 }
 ```
 
-So if you need to, it's possible to iterate over the results and log more
-detailed messages.
+If you need to, you can iterate over the test results and log more detailed
+messages.
 
-
+##### Example
 To set up your own XCTestCase using `cavy-native-reporter`:
 1. Open your project's `.xcodeproj` (or `.xcworkspace`) in Xcode.
 2. In the Project navigator view, navigate to the folder containing your XCTest
@@ -192,7 +190,7 @@ class BridgeTest: XCTestCase {
 }
 ```
 
-#### Android
+### Android
 ##### `waitForReport`
 Call the `waitForReport` method from within your native code to wait for a test
 report to be available from Cavy.
