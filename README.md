@@ -7,7 +7,7 @@ Cavy Native Reporter provides an alternative reporter for Cavy which fires
 a Native Module callback when tests are finished. You can then wire this
 in to a native test runner such as XCTest (examples below).
 
-You may want to do this if you already have some application tests that are 
+You may want to do this if you already have some application tests that are
 native, e.g. if you already use XCTest to test parts of your app. This could
 be because not all of your app is React Native, or if you app makes heavy
 use of native code. You may also want to use it if you have an existing
@@ -136,16 +136,21 @@ waits for Cavy tests to run and fails if any test returns an error:
 @implementation BridgeTest
 
 - (void)testBridge {
+  // Make a new expectation.
   XCTestExpectation *expectation = [[XCTestExpectation alloc] initWithDescription: @"Cavy tests passed"];
 
   [CavyNativeReporter onFinishWithBlock: ^void(NSDictionary* report) {
+    // Pull the error count from the report object.
     long errorCount = [report[@"errorCount"] integerValue];
+    // Fail if there are errors.
     if (errorCount > 0) {
       XCTFail(@"Cavy tests had one or more errors");
     }
+    // Fulfill the expectation.
     [expectation fulfill];
   }];
 
+  // Wait for expectation to fulfill.
   [self waitForExpectations:@[expectation] timeout:100];
 }
 
@@ -188,8 +193,48 @@ class BridgeTest: XCTestCase {
 ```
 
 #### Android
+##### `waitForReport`
+Call the `waitForReport` method from within your native code to wait for a test
+report to be available from Cavy.
 
-TBD!
+##### `cavyReport`
+Call the static member variable `cavyReport` from within your native code to
+access the test report from Cavy.
+
+##### Example
+Taking the sample app as an example, we have an JUnit test `BridgeTest` which
+waits for Cavy tests to run and fails if any test returns an error:
+
+```java
+package com.sampleapp.bridgetest;
+
+import androidx.test.rule.ActivityTestRule;
+
+import org.junit.Rule;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+import com.cavynativereporter.RNCavyNativeReporterModule;
+import com.sampleapp.MainActivity;
+
+public class BridgeTest {
+
+  @Rule
+  public ActivityTestRule<MainActivity> activityRule = new ActivityTestRule(MainActivity.class);
+
+  @Test
+  public void testBridge() throws Exception {
+    // Wait 5 seconds to receive a test report from Cavy.
+    RNCavyNativeReporterModule.waitForReport(5);
+    // Pull the error count from the report object.
+    double errorCount = RNCavyNativeReporterModule.cavyReport.getDouble("errorCount");
+    // Note: Third argument is the `delta` allowed between the actual and
+    // expected double value.
+    assertEquals(errorCount, 0.0, 0.0);
+  }
+}
+
+```
 
 ## Contributing
 Before contributing, please read the [code of conduct](CODE_OF_CONDUCT.md).
