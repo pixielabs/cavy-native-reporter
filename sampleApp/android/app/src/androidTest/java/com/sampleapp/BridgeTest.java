@@ -5,6 +5,7 @@ import androidx.test.rule.ActivityTestRule;
 import org.junit.Rule;
 import org.junit.Test;
 import static org.junit.Assert.*;
+
 import com.cavynativereporter.RNCavyNativeReporterModule;
 import com.sampleapp.MainActivity;
 
@@ -15,13 +16,7 @@ public class BridgeTest {
 
   @Test
   public void testBridge() throws Exception {
-
-    RNCavyNativeReporterModule.onFinish(new Runnable() {
-      @Override
-      public void run() {
-        assertEquals(true, false);
-      }
-    });
-
+    RNCavyNativeReporterModule.waitForReport(5);
+    assertNotEquals(RNCavyNativeReporterModule.cavyReport, null);
   }
 }
