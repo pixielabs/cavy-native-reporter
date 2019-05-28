@@ -17,6 +17,7 @@ public class BridgeTest {
   @Test
   public void testBridge() throws Exception {
     RNCavyNativeReporterModule.waitForReport(5);
-    assertNotEquals(RNCavyNativeReporterModule.cavyReport, null);
+    double errorCount = RNCavyNativeReporterModule.cavyReport.getDouble("errorCount");
+    assertEquals(errorCount, 0.0, 0.0);
   }
 }
