@@ -5,7 +5,6 @@ import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
-import android.util.Log;
 
 public class RNCavyNativeReporterModule extends ReactContextBaseJavaModule {
 
@@ -26,10 +25,18 @@ public class RNCavyNativeReporterModule extends ReactContextBaseJavaModule {
 
   @ReactMethod
   public void reporter(ReadableMap report) {
-    cavyReport = report;
+    if (callback != null) {
+      callback.run();
+    } else {
+      cavyReport = report;
+    }
   }
 
-  public static void onFinish(Runnable callback) {
-    callback.run();
+  public static void onFinish(Runnable block) {
+    if (cavyReport != null) {
+      block.run();
+    } else {
+      callback = block;
+    }
   }
 }
