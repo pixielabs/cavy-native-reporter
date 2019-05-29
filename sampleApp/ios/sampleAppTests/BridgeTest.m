@@ -32,7 +32,7 @@
   }];
 
   // Wait for expectation to fulfill.
-  [self waitForExpectations:@[expectation] timeout:100];
+  [self waitForExpectations:@[expectation] timeout:60];
 }
 
 @end

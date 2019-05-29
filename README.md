@@ -222,8 +222,8 @@ public class BridgeTest {
 
   @Test
   public void testBridge() throws Exception {
-    // Wait 5 seconds to receive a test report from Cavy.
-    RNCavyNativeReporterModule.waitForReport(5);
+    // Wait 60 seconds to receive a test report from Cavy.
+    RNCavyNativeReporterModule.waitForReport(60);
     // Pull the error count from the report object.
     double errorCount = RNCavyNativeReporterModule.cavyReport.getDouble("errorCount");
     // Note: Third argument is the `delta` allowed between the actual and
