@@ -26,7 +26,7 @@ public class RNCavyNativeReporterModule extends ReactContextBaseJavaModule {
 
   public static ReadableMap cavyReport = null;
   // Initialize a CountDownLatch with a count of one as a simple gate.
-  // The thread calling `waitForReport` will wait at `latch.wait` until the
+  // The thread calling `waitForReport` will wait at `latch.await` until the
   // thread called `reporter` opens the gate with `latch.countdown`.
   final static CountDownLatch latch = new CountDownLatch(1);
 
