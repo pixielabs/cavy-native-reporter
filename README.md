@@ -67,7 +67,7 @@ class TestableApp extends Component {
       <Tester specs={IntegrationSpecs}
         store={testHookStore}
         // Extra prop for cavy-native reporter:
-        reporter={CavyNativeReporter.reporter}  
+        reporter={CavyNativeReporter.reporter}>
         <App/>
       </Tester>
     );
