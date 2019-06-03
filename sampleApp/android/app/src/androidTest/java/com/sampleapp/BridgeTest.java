@@ -7,12 +7,13 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 import com.cavynativereporter.RNCavyNativeReporterModule;
+// This should be the identifier for your own app's main activity.
 import com.sampleapp.MainActivity;
 
 // Example test that uses the Android Cavy Native Reporter.
 // Waits on Cavy to finish running tests and passes if error count is 0.
 public class BridgeTest {
-
+  // This rule launches the main activity before each test annotated with @Test.
   @Rule
   public ActivityTestRule<MainActivity> activityRule = new ActivityTestRule(MainActivity.class);
 
