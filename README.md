@@ -1,4 +1,4 @@
-# Cavy Native Reporter (Work in progress)
+# Cavy Native Reporter  
 A reporter for [Cavy], a React Native testing framework, that reports test
 results to native Android or iOS test runners.
 
@@ -274,6 +274,13 @@ public class BridgeTest {
 - [Using JUnit4 Rules](https://developer.android.com/training/testing/junit-rules)
 - [Using the JUnit Runner](https://developer.android.com/training/testing/junit-runner)
 
+## Thank you!
+Cavy Native Reporter was inspired by work done by [Nozbe](https://nozbe.com) on
+[WatermelonDB](https://github.com/Nozbe/WatermelonDB), a high-performance
+database framework for React that uses Cavy for running native integration
+tests.
+
+Thank you to [Radek](https://github.com/radex) in particular who really helped
 
 ## Contributing
 Before contributing, please read the [code of conduct](CODE_OF_CONDUCT.md).
