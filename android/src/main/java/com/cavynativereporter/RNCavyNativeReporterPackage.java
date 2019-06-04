@@ -1,5 +1,5 @@
 
-package com.reactlibrary;
+package com.cavynativereporter;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -10,10 +10,11 @@ import com.facebook.react.bridge.NativeModule;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.uimanager.ViewManager;
 import com.facebook.react.bridge.JavaScriptModule;
-public class CavyNativeReporterPackage implements ReactPackage {
+
+public class RNCavyNativeReporterPackage implements ReactPackage {
     @Override
     public List<NativeModule> createNativeModules(ReactApplicationContext reactContext) {
-      return Arrays.<NativeModule>asList(new CavyNativeReporterModule(reactContext));
+      return Arrays.<NativeModule>asList(new RNCavyNativeReporterModule(reactContext));
     }
 
     // Deprecated from RN 0.47

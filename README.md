@@ -7,7 +7,7 @@ Cavy Native Reporter provides an alternative reporter for Cavy which fires
 a Native Module callback when tests are finished. You can then wire this
 in to a native test runner such as XCTest (examples below).
 
-You may want to do this if you already have some application tests that are 
+You may want to do this if you already have some application tests that are
 native, e.g. if you already use XCTest to test parts of your app. This could
 be because not all of your app is React Native, or if you app makes heavy
 use of native code. You may also want to use it if you have an existing
@@ -83,12 +83,10 @@ cavy-native-reporter overrides this functionality.
 ## Reporting to Native Tests
 
 ### iOS XCTest (Objective C)
-`CavyNativeReporter` has a method `onFinishWithBlock` that you can call from
-your native tests.
-
-`onFinishWithBlock` takes a block with a single argument, which is the report
-object from Cavy. The block is called as soon as the test report is available
-from Cavy and the report has the following structure:
+##### `onFinishWithBlock`
+Call `onFinishWithBlock` from within your native code and pass in a block
+taking the single argument, `report`. Your block will be called as soon as the
+test report is available from Cavy.
 
 The `report` argument passed to the block is an `NSDictionary` with the
 following structure:
@@ -110,17 +108,17 @@ following structure:
 }
 ```
 
-So if you need to, it's possible to iterate over the results and log more
-detailed messages.
+If you need to, you can iterate over the test results and log more detailed
+messages.
 
-
-To set up your own XCTestCase using `cavy-native-reporter`:
+#### Example
+To set up your own XCTestCase that makes use of `cavy-native-reporter`:
 1. Open your project's `.xcodeproj` (or `.xcworkspace`) in Xcode.
 2. In the Project navigator view, navigate to the folder containing your XCTest
 test cases.
 3. Create a new test case (select New File -> Unit Test Case Class).
 4. Import `<CavyNativeReporter/CavyNativeReporter.h>`
-5. Write your expectation!
+5. Write your test!
 
 Taking the sample app as an example, we have an XCTestCase `BridgeTest` which
 waits for Cavy tests to run and fails if any test returns an error:
@@ -136,16 +134,21 @@ waits for Cavy tests to run and fails if any test returns an error:
 @implementation BridgeTest
 
 - (void)testBridge {
+  // Make a new expectation.
   XCTestExpectation *expectation = [[XCTestExpectation alloc] initWithDescription: @"Cavy tests passed"];
 
   [CavyNativeReporter onFinishWithBlock: ^void(NSDictionary* report) {
+    // Pull the error count from the report object.
     long errorCount = [report[@"errorCount"] integerValue];
+    // Fail if there are errors.
     if (errorCount > 0) {
       XCTFail(@"Cavy tests had one or more errors");
     }
+    // Fulfill the expectation.
     [expectation fulfill];
   }];
 
+  // Wait for expectation to fulfill.
   [self waitForExpectations:@[expectation] timeout:100];
 }
 
@@ -161,7 +164,7 @@ prompted to choose a language.
 usually prompt you to create one if this is your first Swift file in the
 project).
 3. Import `<CavyNativeReporter/CavyNativeReporter.h>` in your Bridging Header.
-4. Write your expectation!
+4. Write your test!
 
 The following Swift code is equivalent to the Objective-C example above (note
 that the method `onFinishWithBlock` is renamed when you reference it in Swift):
@@ -187,9 +190,90 @@ class BridgeTest: XCTestCase {
 }
 ```
 
-#### Android
+#### Useful links for iOS Testing
+- [Writing XCTest classes](https://developer.apple.com/library/archive/documentation/DeveloperTools/Conceptual/testing_with_xcode/chapters/04-writing_tests.html)
+- [Running tests](https://developer.apple.com/library/archive/documentation/DeveloperTools/Conceptual/testing_with_xcode/chapters/05-running_tests.html#//apple_ref/doc/uid/TP40014132-CH5-SW1)
+- [Overview of testing with XCTest](https://www.objc.io/issues/15-testing/xctest/)
 
-TBD!
+### Android
+##### `waitForReport`
+Call the `waitForReport` method from within your native code to wait for a test
+report to be available from Cavy.
+
+##### `cavyReport`
+Call the static member variable `cavyReport` from within your native code to
+access the test report from Cavy.
+
+#### Example
+To set up your own JUnit test that makes use of `cavy-native-reporter`:
+
+1. Open your project's `android` folder in Android Studio.
+2. Create a file for your instrumented Android tests at
+`module-name/src/androidTest/java/`. Switching to Project view in Android
+studio should help with this. [Follow this link for more detailed instructions on setting up Instumented Android tests](https://developer.android.com/studio/test#test_types_and_location) i.e. tests that run on an Android device
+or emulator.
+3. Add the following dependencies to `android/app/build.gradle` under
+`dependencies` (don't touch the `build.gradle` in the app folder itself!):
+
+```java
+dependencies: {
+  androidTestImplementation 'junit:junit:4.12'
+  androidTestImplementation 'androidx.test:runner:1.1.0'
+  androidTestImplementation 'androidx.test:rules:1.1.0'
+  ...
+}
+```
+4. Add the following to `android/app/build.gradle` under `defaultConfig`:
+
+```java
+defaultConfig {
+  testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+  ...
+}
+```
+5. Write your test!
+
+
+Taking the sample app as an example, we have an JUnit test `BridgeTest` which
+waits for Cavy tests to run and fails if any test returns an error:
+
+```java
+package com.sampleapp.bridgetest;
+
+import androidx.test.rule.ActivityTestRule;
+
+import org.junit.Rule;
+import org.junit.Test;
+import static org.junit.Assert.*;
+
+import com.cavynativereporter.RNCavyNativeReporterModule;
+// This should be the identifier for your own app's main activity.
+import com.sampleapp.MainActivity;
+
+public class BridgeTest {
+  // This rule launches the main activity before each test annotated with @Test.
+  @Rule
+  public ActivityTestRule<MainActivity> activityRule = new ActivityTestRule(MainActivity.class);
+
+  @Test
+  public void testBridge() throws Exception {
+    // Wait 60 seconds to receive a test report from Cavy.
+    RNCavyNativeReporterModule.waitForReport(60);
+    // Pull the error count from the report object.
+    double errorCount = RNCavyNativeReporterModule.cavyReport.getDouble("errorCount");
+    // Note: Third argument is the `delta` allowed between the actual and
+    // expected double value.
+    assertEquals(0.0, errorCount, 0.0);
+  }
+}
+
+```
+
+#### Useful links for Android Testing
+- [Writing instrumented unit tests](https://developer.android.com/training/testing/unit-testing/instrumented-unit-tests)
+- [Using JUnit4 Rules](https://developer.android.com/training/testing/junit-rules)
+- [Using the JUnit Runner](https://developer.android.com/training/testing/junit-runner)
+
 
 ## Contributing
 Before contributing, please read the [code of conduct](CODE_OF_CONDUCT.md).
