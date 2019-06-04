@@ -1,4 +1,7 @@
-# Cavy Native Reporter  
+# Cavy Native Reporter
+
+[![npm version](https://badge.fury.io/js/cavy-native-reporter.svg)](https://badge.fury.io/js/cavy-native-reporter)
+
 A reporter for [Cavy], a React Native testing framework, that reports test
 results to native Android or iOS test runners.
 
