@@ -281,6 +281,7 @@ database framework for React that uses Cavy for running native integration
 tests.
 
 Thank you to [Radek](https://github.com/radex) in particular who really helped
+get it off the ground :heart:.
 
 ## Contributing
 Before contributing, please read the [code of conduct](CODE_OF_CONDUCT.md).
