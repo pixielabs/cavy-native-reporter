@@ -4,9 +4,9 @@ Pod::Spec.new do |s|
   s.version      = "0.1.0"
   s.summary      = "CavyNativeReporter"
   s.description  = <<-DESC
-                  CavyNativeReporter
+                  CavyNativeReporter - A native test reporter for Cavy
                    DESC
-  s.homepage     = ""
+  s.homepage     = "https://github.com/pixielabs/cavy-native-reporter"
   s.license      = "MIT"
   # s.license      = { :type => "MIT", :file => "FILE_LICENSE" }
   s.author             = { "author" => "author@domain.cn" }
