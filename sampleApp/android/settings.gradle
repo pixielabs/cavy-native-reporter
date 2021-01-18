@@ -1,5 +1,0 @@
-rootProject.name = 'sampleApp'
-include ':cavy-native-reporter'
-project(':cavy-native-reporter').projectDir = new File('../../android')
-
-include ':app'
