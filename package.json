@@ -1,6 +1,6 @@
 {
   "name": "cavy-native-reporter",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "A native test reporter for Cavy, a React Native integration test framework.",
   "main": "index.js",
   "scripts": {
