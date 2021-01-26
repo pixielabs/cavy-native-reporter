@@ -30,9 +30,6 @@ Follow the [Cavy Native Reporter guide](https://cavy.app/docs/guides/cavy-native
 
 Full API documentation can be found on the [Cavy website](https://cavy.app/docs/api/cavy-native-reporter).
 
-You can also check out the [sample app](https://github.com/pixielabs/cavy-native-reporter/tree/master/sampleApp)
-for more inspiration!
-
 ## Thank you!
 Cavy Native Reporter was inspired by work done by [Nozbe](https://nozbe.com) on
 [WatermelonDB](https://github.com/Nozbe/WatermelonDB), a high-performance
