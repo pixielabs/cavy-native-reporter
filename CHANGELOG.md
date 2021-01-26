@@ -1,3 +1,7 @@
+# 0.1.3
+
+- No changes; incorrectly published a .watchmanconfig in npm package.
+
 # 0.1.2
 
 - Fix podspec to have correct definitions from package.json. Thanks
